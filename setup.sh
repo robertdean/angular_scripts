@@ -43,6 +43,9 @@ ng g module dashboard --module=app.module  --project=admin --route=dashboard --r
 ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin
 
+npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
+
+# ng generate @angular/material:nav shell-nav  --project=shared --export=true --skip-import -d
 
 # ng generate @angular/material:nav nav --project=admin
 
