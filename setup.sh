@@ -44,8 +44,9 @@ ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin
 
 npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
-
-# ng generate @angular/material:nav shell-nav  --project=shared --export=true --skip-import -d
+ng generate @angular/material:nav nav  --project=shared --export=true --skip-import -d
+echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
+echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
 
 # ng generate @angular/material:nav nav --project=admin
 
