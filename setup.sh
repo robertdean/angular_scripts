@@ -47,7 +47,7 @@ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.sty
 ng generate @angular/material:nav nav  --project=shared --export=true --skip-import -d
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
-
+#//TODO:   { path: '**', component: PageNotFoundComponent } 
 # ng generate @angular/material:nav nav --project=admin
 
 # ng generate @angular/material:nav src/lib/components/nav --project=shared --module=src/lib/shared.module
