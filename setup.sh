@@ -7,34 +7,39 @@ echo "${green}${green}creating project shell${reset}"
 
 ng new ui --skipInstall=true --skipGit=true --style=scss --createApplication=false --commit=false 
 cd ui
-echo "${green}creating admin projectl${reset}"
+echo "${green}creating admin project${reset}"
 ng g application admin --prefix=admin  --skipInstall=true --style=scss  --routing=true
-echo "${green}creating client projectl${reset}"
+echo "${green}creating client project${reset}"
 ng g application client --prefix=client  --skipInstall=true --style=scss --routing=true
-echo "${green}creating shared libraryl${reset}"
+echo "${green}creating shared library${reset}"
 ng g library shared --prefix=lib  --skipInstall=true
 echo "${green}installing deps ${reset}"
 npm i 
-echo "${green}adding angular material depsl${reset}"
+echo "${green}adding angular material deps${reset}"
 ng add @angular/material
 ng add @angular/cdk
 npm install material-design-icons --save
 npm install roboto-fontface --save
+# *does not work* ng config projects.admin.architect.build.options.styles[1] "./node_modules/material-design-icons/iconfont/material-icons.css"
+# *does not work* ng config projects.admin.architect.build.options.styles[1] "./node_modules/material-design-icons/iconfont/material-icons.css"
+
 # npm i json -g 
 #                                                                                        
-npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
-npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
-npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[1]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
-npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
+echo "${green} adding stylesheets to projects ${reset}"
 
-# TODO: fix this line for roboto font json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="node_modules/roboto/.css"' '
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[3]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[4]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[3]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[4]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
 
-echo "${green} adding shared componentsl${reset}"
+echo "${green} adding shared components${reset}"
 
 ng g c components/page-not-found --project=shared --export=true
 ng g c components/access-denied --project=shared --export=true
-ng g c components/nav --project=shared --export=true
-
 ng g module users --module=app.module  --project=admin --route=users --routing=true 
 ng g module roles --module=app.module  --project=admin --route=roles --routing=true 
 ng g module logs --module=app.module  --project=admin --route=logs --routing=true 
@@ -43,15 +48,13 @@ ng g module dashboard --module=app.module  --project=admin --route=dashboard --r
 ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin
 
-npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
-ng generate @angular/material:nav nav  --project=shared --export=true --skip-import -d
+ng generate @angular/material:nav nav  --project=shared --export=true --skip-import
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
+
 #//TODO:   { path: '**', component: PageNotFoundComponent } 
 # ng generate @angular/material:nav nav --project=admin
-
 # ng generate @angular/material:nav src/lib/components/nav --project=shared --module=src/lib/shared.module
-
 # echo "${green}adding stuff to angular.json "
 #  cat angular.json | jq '.projects.admin.architect.build.options.styles |= . + ["./node_modules/material-design-icons/iconfont/material-icons.css","./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"]' > angular.json
 #  cat angular.json | jq '.projects.client.architect.build.options.styles |= . + ["./node_modules/material-design-icons/iconfont/material-icons.css","./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"]' > angular.json
