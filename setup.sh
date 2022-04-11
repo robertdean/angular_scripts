@@ -40,6 +40,7 @@ echo "${green} adding shared components${reset}"
 
 ng g c components/page-not-found --project=shared --export=true
 ng g c components/access-denied --project=shared --export=true
+
 ng g module users --module=app.module  --project=admin --route=users --routing=true 
 ng g module roles --module=app.module  --project=admin --route=roles --routing=true 
 ng g module logs --module=app.module  --project=admin --route=logs --routing=true 
@@ -48,7 +49,8 @@ ng g module dashboard --module=app.module  --project=admin --route=dashboard --r
 ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin
 
-ng generate @angular/material:nav nav  --project=shared --export=true --skip-import
+ng generate @angular/material:nav nav  --project=shared --export=true
+
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
 
