@@ -57,10 +57,7 @@ echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/
 #//TODO:   { path: '**', component: PageNotFoundComponent } 
 # ng generate @angular/material:nav nav --project=admin
 # ng generate @angular/material:nav src/lib/components/nav --project=shared --module=src/lib/shared.module
-# echo "${green}adding stuff to angular.json "
-#  cat angular.json | jq '.projects.admin.architect.build.options.styles |= . + ["./node_modules/material-design-icons/iconfont/material-icons.css","./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"]' > angular.json
-#  cat angular.json | jq '.projects.client.architect.build.options.styles |= . + ["./node_modules/material-design-icons/iconfont/material-icons.css","./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"]' > angular.json
-# echo "${green}done"
+
 
 # ng add @ngx-formly/schematics --ui-theme=material
 
