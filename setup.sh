@@ -53,12 +53,10 @@ ng g module dashboard --module=app.module  --project=admin --route=dashboard --r
 ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin --module=dashboard
 
-# ng generate @angular/material:nav nav  --project=shared --export=true
+ng generate @angular/material:nav components/nav  --project=shared --skip-import
 
-# ng generate @angular/material:nav components/nav --project=shared --module=shared.module --skip-import --export=true 
+sed -i.bak 's/<!-- Add Content Here -->/<ng-content><\/ng-content>/g'  projects/shared/src/lib/components/nav/nav.component.html 
 
-sed -i 's/<!-- Add Content Here -->/<ng-content><\/ng-content>/g'  projects/shared/src/lib/components/nav/nav.component.html 
-sed -i 's///g' projects/shared/src/lib/shared.module.ts
 
 cp ../material.module.ts projects/shared/src/lib/material.module.ts
 sed -i '' '5 i\
@@ -90,8 +88,6 @@ sed -i '' '7 i\
 import { SharedModule } from "projects/shared/src/public-api";
 ' projects/client/src/app/app.module.ts
 
-
-ng generate @angular/material:nav src/lib/components/nav --project=shared --module=shared.module --skip-import --export=true
 
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
