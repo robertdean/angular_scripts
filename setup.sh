@@ -26,20 +26,22 @@ npm install roboto-fontface --save
 # npm i json -g 
 #                                                                                        
 echo "${green} adding stylesheets to projects ${reset}"
-
- npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
- npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
- npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[3]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
- npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[4]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
- npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
- npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
- npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[3]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
- npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[4]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
+#  npx json -I -f  angular.json -e 'this.projects.admin.architect.build.options.styles=[]'
+#  npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
+#  npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[1]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
+ npx json -I -f angular.json -e 'this.projects.admin.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
+#  npx json -I -f  angular.json -e 'this.projects.client.architect.build.options.styles=[]'
+#  npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[1]="./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"'
+#  npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="projects/admin/src/styles.scss"' 
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[1]="./node_modules/material-design-icons/iconfont/material-icons.css"' 
+ npx json -I -f angular.json -e 'this.projects.client.architect.build.options.styles[2]="./node_modules/roboto-fontface/css/roboto/roboto-fontface.css"' 
 
 echo "${green} adding shared components${reset}"
 
 ng g c components/page-not-found --project=shared --export=true
 ng g c components/access-denied --project=shared --export=true
+
 
 ng g module users --module=app.module  --project=admin --route=users --routing=true 
 ng g module roles --module=app.module  --project=admin --route=roles --routing=true 
@@ -50,9 +52,24 @@ ng generate @angular/material:dashboard main --project=admin --module=dashboard
 ng generate @angular/material:table table --project=admin
 
 ng generate @angular/material:nav nav  --project=shared --export=true
-
+g generate @angular/material:nav src/lib/components/nav --project=shared --module=shared.module --skip-import --export=true
+ng generate @angular/material:nav components/nav --project=shared --module=shared.module --skip-import --export=true 
+sed -i 's/<!-- Add Content Here -->/<ng-content><\/ng-content>/g'  ui/projects/shared/src/lib/components/nav/nav.component.html 
+sed -i 's///g' ui/projects/shared/src/lib/shared.module.ts
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/admin/src/app/app.component.html  
 echo "<lib-nav><router-outlet></router-outlet></lib-nav>" > projects/client/src/app/app.component.html  
+cp material.module.ts ui/projects/shared/src/lib/material.module.ts
+sed -i '' '5 i\
+import { MaterialModule  } from "./material.module";
+' ui/projects/shared/src/lib/shared.module.ts
+
+sed -i '' '6 i\
+import { CommonModule  } from "@angular/common";
+' ui/projects/shared/src/lib/shared.module.ts
+
+sed -i '' '15 i\
+CommonModule, MaterialModule
+' ui/projects/shared/src/lib/shared.module.ts
 
 #//TODO:   { path: '**', component: PageNotFoundComponent } 
 # ng generate @angular/material:nav nav --project=admin
